@@ -1,7 +1,7 @@
 package route
 
 import (
-	"GoLangProjector/hw6/hw6/publicTransport"
+	"GoLangProjector/hw6/publicTransport"
 	"fmt"
 )
 

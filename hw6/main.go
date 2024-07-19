@@ -1,9 +1,9 @@
 package main
 
 import (
-	"GoLangProjector/hw6/hw6/passengers"
-	"GoLangProjector/hw6/hw6/publicTransport"
-	"GoLangProjector/hw6/hw6/route"
+	"GoLangProjector/hw6/passengers"
+	"GoLangProjector/hw6/publicTransport"
+	"GoLangProjector/hw6/route"
 )
 
 func main() {

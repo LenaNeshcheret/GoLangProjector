@@ -1,7 +1,7 @@
 package passengers
 
 import (
-	"GoLangProjector/hw6/hw6/route"
+	"GoLangProjector/hw6/route"
 	"fmt"
 )
 
