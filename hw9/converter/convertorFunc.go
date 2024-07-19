@@ -1,20 +1,13 @@
 package converter
 
 import (
-	"GoLangProjector/hw6/hw9/dto"
-	"GoLangProjector/hw6/hw9/entity"
+	"GoLangProjector/hw9/dto"
+	"GoLangProjector/hw9/entity"
 )
 
-type Converter interface {
-	Convert(interface{}) interface{}
-}
 type ClassConverter struct{}
 
-func (c *ClassConverter) Convert(input interface{}) interface{} {
-	classes, ok := input.([]entity.Class)
-	if !ok {
-		return nil
-	}
+func (c *ClassConverter) Convert(classes []entity.Class) []dto.Class {
 	dtoClasses := make([]dto.Class, len(classes))
 	for i, class := range classes {
 		dtoStudents := make([]string, len(class.Students))
@@ -32,11 +25,7 @@ func (c *ClassConverter) Convert(input interface{}) interface{} {
 
 type StudentConverter struct{}
 
-func (c *StudentConverter) Convert(input interface{}) interface{} {
-	student, ok := input.(entity.Student)
-	if !ok {
-		return nil
-	}
+func (c *StudentConverter) Convert(student entity.Student) dto.Student {
 	dtoStudent := dto.Student{
 		ID:     student.ID,
 		Name:   student.Name,

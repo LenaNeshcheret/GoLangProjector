@@ -1,9 +1,9 @@
 package main
 
 import (
-	"GoLangProjector/hw6/hw9/converter"
-	"GoLangProjector/hw6/hw9/entity"
-	resursestype "GoLangProjector/hw6/hw9/resurses"
+	"GoLangProjector/hw9/converter"
+	"GoLangProjector/hw9/entity"
+	resursestype "GoLangProjector/hw9/resurses"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -129,12 +129,12 @@ func init() {
 	storage := entity.NewStorage()
 
 	classResource = resursestype.ClassResource{
-		S: storage,
-		C: &converter.ClassConverter{},
+		S:  storage,
+		Cc: &converter.ClassConverter{},
 	}
 	studentResource = resursestype.StudentResource{
-		S: storage,
-		C: &converter.StudentConverter{},
+		S:  storage,
+		Sc: &converter.StudentConverter{},
 	}
 
 	teachers = []entity.Teacher{

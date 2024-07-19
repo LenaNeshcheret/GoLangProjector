@@ -1,8 +1,8 @@
 package resursestype
 
 import (
-	"GoLangProjector/hw6/hw9/converter"
-	"GoLangProjector/hw6/hw9/entity"
+	"GoLangProjector/hw9/converter"
+	"GoLangProjector/hw9/entity"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,13 +10,13 @@ import (
 )
 
 type ClassResource struct {
-	S *entity.Storage
-	C converter.Converter
+	S  *entity.Storage
+	Cc *converter.ClassConverter
 }
 
 func (cR *ClassResource) GetAllClasses(w http.ResponseWriter, r *http.Request) {
 	classes := cR.S.GetAllClasses()
-	dtoClasses := cR.C.Convert(classes)
+	dtoClasses := cR.Cc.Convert(classes)
 
 	err := json.NewEncoder(w).Encode(dtoClasses)
 	if err != nil {
