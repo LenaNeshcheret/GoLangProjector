@@ -8,43 +8,70 @@ import (
 )
 
 func main() {
+	if len(os.Args) == 1 {
+		fmt.Println("Not enough arguments")
+		printUsage()
+		return
+	}
 	file, err := os.OpenFile("/Users/bigmag/GoLangProjector/hw12/KeyPassword.txt", os.O_RDWR, 0666)
 	if err != nil {
 		fmt.Println("The file to save doesn't answer", err)
 	}
 	defer file.Close()
 
-	save(file)
-	printPasswordKey(getAllPasswordKey(file))
-	getPasswordByKey(file)
+	command := os.Args[1]
+
+	switch command {
+	case "getAll":
+		if len(os.Args) != 2 {
+			fmt.Println("Usage: getAll")
+			return
+		}
+		getAllPasswordKey(file)
+	case "get":
+		if len(os.Args) != 3 {
+			fmt.Println("Usage: get <key>")
+			return
+		}
+		key := os.Args[2]
+		getPasswordByKey(file, key)
+	case "save":
+		if len(os.Args) != 4 {
+			fmt.Println("Usage: save <key> <password>")
+			return
+		}
+		key := os.Args[2]
+		password := os.Args[3]
+		save(file, key, password)
+	default:
+		printHelp(command)
+	}
 }
 
-func save(file *os.File) {
+func printHelp(command string) {
+	fmt.Println("Unknown command:", command)
+	printUsage()
+}
+func printUsage() {
+	fmt.Println("Usage:")
+	fmt.Println(" getAll")
+	fmt.Println(" get <key>")
+	fmt.Println(" save <key> <password>")
+}
 
-	fmt.Println("Enter key for password:")
-	var PasswordKey string
-	_, err := fmt.Scan(&PasswordKey)
-	if err != nil {
-		fmt.Println("Error reading key for password:", err)
-	}
+func save(file *os.File, key string, password string) {
+
 	keys := getAllPasswordKey(file)
-	for _, key := range keys {
-		if key == PasswordKey {
-			fmt.Printf("Please use another key for password, %s is already used\n", PasswordKey)
+	for _, k := range keys {
+		if k == key {
+			fmt.Printf("Please use another key for password, %s is already used\n", key)
 			return
 		}
 	}
-
-	fmt.Println("Enter password:")
-	var Password string
-	_, err = fmt.Scan(&Password)
-	if err != nil {
-		fmt.Println("Error reading password:", err)
-	}
-
-	_, err = file.WriteString(PasswordKey + " " + Password + "\n")
+	_, err := file.WriteString(key + " " + password + "\n")
 	if err != nil {
 		fmt.Println("Error write to file:", err)
+		return
 	}
 }
 
@@ -57,7 +84,7 @@ func getAllPasswordKey(file *os.File) []string {
 		parts := strings.SplitN(line, " ", 2)
 		keys = append(keys, parts[0])
 	}
-
+	printPasswordKey(keys)
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file:", err)
 	}
@@ -70,20 +97,14 @@ func printPasswordKey(pats []string) {
 	}
 }
 
-func getPasswordByKey(file *os.File) {
-	fmt.Println("Enter password keys:")
-	var PasswordKey string
-	_, err := fmt.Scan(&PasswordKey)
-	if err != nil {
-		fmt.Println("Error reading key for password:", err)
-	}
+func getPasswordByKey(file *os.File, key string) {
 	resetReadToStart(file)
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
 		parts := strings.SplitN(line, " ", 2)
 		for _, passKey := range parts {
-			if PasswordKey == passKey {
+			if key == passKey {
 				fmt.Println("This is your password:")
 				fmt.Println(parts[1])
 			}
