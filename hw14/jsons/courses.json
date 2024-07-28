@@ -1,0 +1,87 @@
+[
+  {
+    "ID": 1,
+    "Name": "Introduction to Go",
+    "Description": "Learn the basics of Go programming language.",
+    "Module": [
+      {
+        "ID": 1,
+        "CourseId": 1,
+        "Name": "Getting Started"
+      },
+      {
+        "ID": 2,
+        "CourseId": 1,
+        "Name": "Advanced Topics"
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "Name": "Web Development with Go",
+    "Description": "Build web applications using Go.",
+    "Module": [
+      {
+        "ID": 3,
+        "CourseId": 2,
+        "Name": "HTTP Basics"
+      },
+      {
+        "ID": 4,
+        "CourseId": 2,
+        "Name": "Building REST APIs"
+      }
+    ]
+  },
+  {
+    "ID": 3,
+    "Name": "Go Concurrency",
+    "Description": "Learn how to handle concurrency in Go.",
+    "Module": [
+      {
+        "ID": 5,
+        "CourseId": 3,
+        "Name": "Goroutines"
+      },
+      {
+        "ID": 6,
+        "CourseId": 3,
+        "Name": "Channels"
+      }
+    ]
+  },
+  {
+    "ID": 4,
+    "Name": "Testing in Go",
+    "Description": "Master testing techniques in Go.",
+    "Module": [
+      {
+        "ID": 7,
+        "CourseId": 4,
+        "Name": "Unit Testing"
+      },
+      {
+        "ID": 8,
+        "CourseId": 4,
+        "Name": "Integration Testing"
+      }
+    ]
+  },
+  {
+    "ID": 5,
+    "Name": "Go Data Structures",
+    "Description": "Explore data structures in Go.",
+    "Module": [
+      {
+        "ID": 9,
+        "CourseId": 5,
+        "Name": "Arrays and Slices"
+      },
+      {
+        "ID": 10,
+        "CourseId": 5,
+        "Name": "Maps"
+      }
+    ]
+  }
+]
