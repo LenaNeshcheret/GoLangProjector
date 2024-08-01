@@ -8,40 +8,41 @@ import (
 )
 
 func main() {
-	if len(os.Args) == 1 {
+	if len(os.Args) == 2 {
 		fmt.Println("Not enough arguments")
 		printUsage()
 		return
 	}
-	file, err := os.OpenFile("/Users/bigmag/GoLangProjector/hw12/KeyPassword.txt", os.O_RDWR, 0666)
+	fromFile := os.Args[1]
+	file, err := os.OpenFile(fromFile, os.O_RDWR, 0666)
 	if err != nil {
 		fmt.Println("The file to save doesn't answer", err)
 	}
 	defer file.Close()
 
-	command := os.Args[1]
+	command := os.Args[2]
 
 	switch command {
 	case "getAll":
-		if len(os.Args) != 2 {
+		if len(os.Args) != 3 {
 			fmt.Println("Usage: getAll")
 			return
 		}
 		getAllPasswordKey(file)
 	case "get":
-		if len(os.Args) != 3 {
+		if len(os.Args) != 4 {
 			fmt.Println("Usage: get <key>")
 			return
 		}
-		key := os.Args[2]
+		key := os.Args[3]
 		getPasswordByKey(file, key)
 	case "save":
-		if len(os.Args) != 4 {
+		if len(os.Args) != 5 {
 			fmt.Println("Usage: save <key> <password>")
 			return
 		}
-		key := os.Args[2]
-		password := os.Args[3]
+		key := os.Args[3]
+		password := os.Args[4]
 		save(file, key, password)
 	default:
 		printHelp(command)
@@ -53,7 +54,7 @@ func printHelp(command string) {
 	printUsage()
 }
 func printUsage() {
-	fmt.Println("Usage:")
+	fmt.Println("Write the path to the file as the first parameter. After that, use one of the functions:")
 	fmt.Println(" getAll")
 	fmt.Println(" get <key>")
 	fmt.Println(" save <key> <password>")
