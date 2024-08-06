@@ -1,0 +1,19 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: university
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    environment:
+      POSTGRES_CONN_STR: "user=postgres password=password dbname=university host=host.docker.internal port=5432 sslmode=disable"
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
