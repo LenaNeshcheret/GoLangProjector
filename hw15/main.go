@@ -24,16 +24,6 @@ func main() {
 		log.Fatalf("Failed to initialize storage: %v", err)
 	}
 
-	// Example usage
-	tasks, err := storage.GetAllTasks()
-	if err != nil {
-		log.Fatalf("Failed to get all tasks: %v", err)
-	}
-
-	for _, task := range tasks {
-		fmt.Printf("Task ID: %d, Title: %s, Done: %v\n", task.ID, task.Title, task.IsDone)
-	}
-
 	// Create an HTTP server and routes
 	mux := http.NewServeMux()
 	tasksResource := TaskResource{storage}
@@ -67,10 +57,10 @@ func NewStorage(connString string) (*Storage, error) {
 		return nil, fmt.Errorf("error during pinging database: %w", err)
 	}
 
-	_, err = db.Query("CREATE table IF NOT EXISTS  tasks (id serial, title varchar, is_done boolean)")
-	if err != nil {
-		return nil, fmt.Errorf("error during during taable creation: %w", err)
-	}
+	//_, err = db.Query("CREATE table IF NOT EXISTS  tasks (id serial, title varchar, is_done boolean)")
+	//if err != nil {
+	//	return nil, fmt.Errorf("error during during taable creation: %w", err)
+	//}
 
 	return &Storage{db: db}, nil
 }
