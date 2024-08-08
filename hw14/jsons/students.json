@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Alice",
+    "Email": "alice@example.com",
+    "Rating": 4.5,
+    "Courses": []
+  },
+  {
+    "Name": "Bob",
+    "Email": "bob@example.com",
+    "Rating": 4.7,
+    "Courses": []
+  },
+  {
+    "Name": "Charlie",
+    "Email": "charlie@example.com",
+    "Rating": 4.6,
+    "Courses": []
+  }
+]
