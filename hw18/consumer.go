@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"hw18/common"
 	"time"
 
 	"github.com/rs/zerolog/log"
@@ -14,7 +15,7 @@ func main() {
 
 	kafkaReader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers: []string{"localhost:9092"},
-		Topic:   orangesTopic,
+		Topic:   common.OrangesTopic,
 	})
 
 	var small, medium, large int
@@ -38,16 +39,16 @@ func main() {
 			log.Fatal().Err(err).Msg("Failed to read message")
 		}
 
-		var orangeSize int32
-		if err := json.Unmarshal(message.Value, &orangeSize); err != nil {
-			log.Printf("Failed to decode message: ", err)
+		var orange common.Orange
+		if err := json.Unmarshal(message.Value, &orange); err != nil {
+			log.Warn().Err(err).Msg("Failed to decode message")
 			continue
 		}
 
 		switch {
-		case orangeSize < 250:
+		case orange.Size < 250:
 			small++
-		case orangeSize <= 400:
+		case orange.Size <= 400:
 			medium++
 		default:
 			large++

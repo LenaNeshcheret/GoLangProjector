@@ -2,28 +2,37 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	"github.com/rs/zerolog/log"
 	"github.com/segmentio/kafka-go"
+	"hw18/common"
 	"math/rand"
 )
-
-const orangesTopic = "oranges"
 
 func main() {
 	ctx := context.Background()
 
-	conn, err := kafka.DialLeader(ctx, "tcp", "localhost:9092", orangesTopic, 0)
+	conn, err := kafka.DialLeader(ctx, "tcp", "localhost:9092", common.OrangesTopic, 0)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to dial kafka")
 	}
-	defer conn.Close()
+	defer func(conn *kafka.Conn) {
+		err := conn.Close()
+		if err != nil {
+			
+		}
+	}(conn)
 
 	for {
-		orangeSize := rand.Intn(401) + 100
-		message := fmt.Sprintf("%d", orangeSize)
+		orange := common.Orange{
+			Size: int32(rand.Intn(401) + 100),
+		}
+		message, err := json.Marshal(orange)
+		if err != nil {
+			log.Fatal().Err(err).Msg("Failed to marshal orange to JSON")
+		}
 		_, err = conn.WriteMessages(
-			kafka.Message{Value: []byte(message)},
+			kafka.Message{Value: message},
 		)
 		if err != nil {
 			log.Fatal().Err(err).Msg("Failed to write kafka messages")
