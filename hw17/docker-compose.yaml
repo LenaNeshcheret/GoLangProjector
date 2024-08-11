@@ -1,0 +1,25 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: university
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+  redis_cache:
+    image: redis
+    ports:
+      - "6379:6379"
+  api:
+    build: .
+    environment:
+      POSTGRES_CONN_STR: "user=postgres password=password dbname=university host=host.docker.internal port=5432 sslmode=disable"
+      REDIS_CONN_STR: "host.docker.internal:6379"
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    depends_on:
+      - database
