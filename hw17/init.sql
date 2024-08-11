@@ -1,0 +1,1 @@
+CREATE table tasks (id serial, title varchar, is_done boolean)
